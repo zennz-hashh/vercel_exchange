@@ -57,7 +57,7 @@ export function Swap() {
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
           <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
             <p className="text-sm font-semibold text-blue-900 mb-1">
-              {user.locale === 'id' ? 'Rate Demo Tetap' : 'Fixed Demo Rate'}
+              {user.locale === 'id' ? 'Rate Price' : 'Fixed Price Rate'}
             </p>
             <p className="text-lg font-bold text-blue-700">1 SPHYNX = 0.000001 BNB</p>
             <p className="text-xs text-blue-600 mt-1">1 BNB = 1,000,000 SPHYNX</p>
