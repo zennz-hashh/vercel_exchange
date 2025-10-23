@@ -66,19 +66,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const accounts = JSON.parse(accountsStr);
       const account = accounts.find((a: any) => a.email === email && a.password === password);
       if (!account) return false;
-      const userData: UserState = {
-        id: '',
-        displayName: account.username,
-        email: account.email,
-        sphynxBalance: 850000,
-        bnbBalance: 0,
-        ethBalance: 0,
-        btcBalance: 0,
-        solBalance: 0,
-        baseBalance: 0,
-        locale: 'id',
-        greetingVoiceEnabled: true,
-      };
+      // Use persisted user data if available
+      const storedUser = localStorage.getItem('zixiex_user');
+      let userData: UserState;
+      if (storedUser) {
+        userData = JSON.parse(storedUser);
+      } else {
+        userData = {
+          id: '',
+          displayName: account.username,
+          email: account.email,
+          sphynxBalance: 850000,
+          bnbBalance: 0,
+          ethBalance: 0,
+          btcBalance: 0,
+          solBalance: 0,
+          baseBalance: 0,
+          locale: 'id',
+          greetingVoiceEnabled: true,
+        };
+      }
       setUser(userData);
       localStorage.setItem('zixiex_user', JSON.stringify(userData));
       return true;
@@ -198,6 +205,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = () => { setUser(null); localStorage.removeItem('zixiex_user'); };
+  // Do NOT reset sphynxBalance on logout, just clear user from context and localStorage
 
   const updateBalance = (_currency: string, amount: number) => {
     if (!user) return;
